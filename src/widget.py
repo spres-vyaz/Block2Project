@@ -2,7 +2,7 @@ from src.masks import get_mask_account, get_mask_card_number
 
 
 def mask_account_card(card_number: str) -> str:
-    """Функция принимает на вход строку, содержащую тип и номер карты или счета"""
+    """Функция принимает на вход строку, содержащую тип и номер карты или счета и возвращает соответствующую маску"""
     splitted_list = card_number.split()
     if splitted_list[0] == "Счет":
         splitted_list[-1] = get_mask_account(int(splitted_list[-1]))
