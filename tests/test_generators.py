@@ -1,14 +1,14 @@
 import pytest
 
-from src.generators import filter_by_currency
+from src.generators import filter_by_currency, transaction_description
 
 
 @pytest.mark.parametrize(
     "type_of_currency, expected_ids",
     [
-        ("USD", [939719570, 142264268, 895315941]),  # Ожидаемые ID для USD и StopIteration
-        ("RUB", [873106923, 594226727]),             # Ожидаемые ID для RUB и StopIteration
-        ("EUR", []),                     # Ожидаемые ID для EUR и StopIteration
+        ("USD", [939719570, 142264268, 895315941]),
+        ("RUB", [873106923, 594226727]),
+        ("EUR", []),
     ]
 )
 
@@ -39,3 +39,18 @@ def test_filter_by_currency_empty(transactions):
     eur_transactions = filter_by_currency(transactions, "EUR")
     result = list(eur_transactions)
     assert len(result) == 0
+
+def test_transaction_description(transactions, expected_descriptions):
+    description = transaction_description(transactions)
+    try:
+        for expected_description in expected_descriptions:
+            assert next(description) == expected_description
+    except StopIteration:
+        print("No more descriptions")
+
+def test_transaction_description_empty():
+    description = transaction_description([])
+    try:
+        assert next(description) == ""
+    except StopIteration:
+        print("No more descriptions")
