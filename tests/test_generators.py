@@ -54,10 +54,8 @@ def test_transaction_descriptions(transactions: list, expected_descriptions: lis
 
 def test_transaction_descriptions_empty() -> None:
     description = transaction_description([])
-    try:
-        assert next(description) == ""
-    except StopIteration:
-        print("No more descriptions")
+    with pytest.raises(StopIteration):
+        next(description)
 
 
 def test_card_number_generator_single_card() -> None:
