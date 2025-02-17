@@ -1,6 +1,6 @@
 import pytest
 
-from src.generators import filter_by_currency, transaction_description
+from src.generators import filter_by_currency, transaction_description, card_number_generator
 
 
 @pytest.mark.parametrize(
@@ -54,3 +54,19 @@ def test_transaction_description_empty():
         assert next(description) == ""
     except StopIteration:
         print("No more descriptions")
+
+def test_card_number_generator_single_card():
+    generator = card_number_generator(1, 1)
+    assert next(generator) == "0000 0000 0000 0001"
+
+def test_card_number_generator_invalid_range():
+    generator = card_number_generator(5, 1)
+    with pytest.raises(StopIteration):
+        next(generator)
+
+def test_card_number_generator_multiple_cards():
+    generator = card_number_generator(1, 3)
+    expected = ["0000 0000 0000 0001", "0000 0000 0000 0002", "0000 0000 0000 0003"]
+    assert next(generator) == expected[0]
+    assert next(generator) == expected[1]
+    assert next(generator) == expected[2]
