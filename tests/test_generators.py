@@ -1,6 +1,6 @@
 import pytest
 
-from src.generators import card_number_generator, filter_by_currency, transaction_description, transaction_descriptions
+from src.generators import card_number_generator, filter_by_currency, transaction_descriptions
 
 
 @pytest.mark.parametrize(
@@ -53,7 +53,7 @@ def test_transaction_descriptions(transactions: list, expected_descriptions: lis
 
 
 def test_transaction_descriptions_empty() -> None:
-    description = transaction_description([])
+    description = transaction_descriptions([])
     with pytest.raises(StopIteration):
         next(description)
 
